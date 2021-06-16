@@ -6,19 +6,27 @@ var Queue = function() {
 
   // Implement the methods below
   someInstance.enqueue = function(value) {
-    storage.length += 1;
     storage[storage.length] = value;
+    storage.length += 1;
   };
 
   someInstance.dequeue = function() {
-    var dequeuedValue = storage[0];
-    delete storage[0];
-    storage.length -= 1;
-    return storage[0];
+    if (storage.length > 0) {
+      var dequeuedValue = storage[0];
+      delete storage[0];
+
+      for (var i = 0; i < storage.length - 1; i++) {
+        storage[i] = storage[i + 1];
+      }
+      delete storage[i];
+
+      storage.length -= 1;
+      return dequeuedValue;
+    }
   };
 
   someInstance.size = function() {
-    return storage.lenght;
+    return storage.length;
   };
 
   return someInstance;
