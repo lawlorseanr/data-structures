@@ -5,25 +5,20 @@ var Queue = function() {
   var storage = {};
   someInstance.storage = storage;
 
-  // Implement the methods below
-  //first in first out,
-  //in from the back door which is last index
-  // out from the front door which is first index
-
   someInstance.enqueue = function(value) {
-    //enqueue(string) - Add a string to the back of the queue
     var indexToBe = Object.keys(someInstance.storage).length;
     someInstance.storage[indexToBe] = value;
   };
 
   someInstance.dequeue = function() {
-    //dequeue() - Remove and return the string at the front of the queue
     var dequeuedItem = someInstance.storage[0];
     delete someInstance.storage[0];
-    for (var i = 0; i <= someInstance.storage.length; i++) {
+    var currentLength = Object.keys(someInstance.storage).length;
+
+    for (var i = 0; i <= currentLength; i++) {
       someInstance.storage[i] = someInstance.storage[ i + 1];
     }
-
+    delete someInstance.storage[currentLength];
     return dequeuedItem;
   };
 
@@ -35,5 +30,4 @@ var Queue = function() {
 
   return someInstance;
 };
-
 
