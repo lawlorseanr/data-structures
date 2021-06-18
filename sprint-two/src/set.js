@@ -2,7 +2,8 @@ var Set = function() {
   var set = Object.create(setPrototype);
 
   // set the _storage value to an empty array
-  set._storage = []; // fix me
+  // refactored to object
+  set._storage = {}; // fix me
   return set;
 };
 
@@ -13,8 +14,8 @@ setPrototype.add = function(item) {
   /*
     add the item to the end of hte array
    */
-  if (this._storage.indexOf(item) < 0) {
-    this._storage.push(item);
+  if (this._storage[item] === undefined) {
+    this._storage[item] = null;
   }
 };
 
@@ -29,7 +30,7 @@ setPrototype.contains = function(item) {
 
     if we get to thsi point, it isn't in the array, return false
    */
-  return this._storage.indexOf(item) >= 0;
+  return this._storage[item] === null;
 };
 
 // method, takes any string and removes it from the set, if present
@@ -43,21 +44,7 @@ setPrototype.remove = function(item) {
         if the very last index of the array
           remove the last index of the array
    */
-  var found = false;
-  for (var i = 0; i < this._storage.length; i++) {
-    if (this._storage[i] === item) {
-      found = true;
-    }
-
-    if (found && i !== this._storage.length - 1) {
-      this._storage[i] = this._storage[i + 1];
-    }
-
-    if (found && i === this._storage.length - 1) {
-      this._storage.pop();
-    }
-
-  }
+  delete this._storage[item];
 };
 
 /*
