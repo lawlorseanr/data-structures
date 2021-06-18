@@ -58,25 +58,14 @@ var LinkedList = function() {
           if current node value equals target, return boolean
     */
 
-    found = false;
-    if (list.head !== undefined) {
-
-      var currentNode = list.head;
-      while (!found) {
-        if (currentNode.value === target) {
-          found = true;
-        }
-
-        currentNode = currentNode.next;
-
-        if (currentNode === null) {
-          break;
-        }
+    var currentNode = list.head;
+    while (currentNode !== null) {
+      if (currentNode.value === target) {
+        return true;
       }
-      return found;
-
+      currentNode = currentNode.next;
     }
-
+    return false;
 
   };
 
