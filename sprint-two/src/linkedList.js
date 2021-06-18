@@ -18,7 +18,6 @@ var LinkedList = function() {
       var newNode = Node(value);
       list.tail.next = newNode;
       list.tail = newNode;
-
     }
 
     if (list.head === null) {
@@ -58,7 +57,6 @@ var LinkedList = function() {
           if current node value equals target, return boolean
     */
 
-    /*
     var currentNode = list.head;
     while (currentNode !== null) {
       if (currentNode.value === target) {
@@ -67,7 +65,8 @@ var LinkedList = function() {
       currentNode = currentNode.next;
     }
     return false;
-    */
+
+    /*
     var recur = function(node) {
       if (node === null) {
         return false;
@@ -78,7 +77,7 @@ var LinkedList = function() {
       return recur(node.next);
     };
     return recur(list.head);
-
+    */
   };
 
   return list;
