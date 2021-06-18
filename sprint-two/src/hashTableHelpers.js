@@ -28,6 +28,12 @@ var LimitedArray = function(limit) {
       callback(storage[i], i, storage);
     }
   };
+  /*
+  limitedArray.remove = function(index) {
+    checkLimit(index);
+    delete storage[index];
+  };
+  */
 
   var checkLimit = function(index) {
     if (typeof index !== 'number') {

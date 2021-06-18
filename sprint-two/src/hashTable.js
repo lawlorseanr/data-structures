@@ -1,5 +1,5 @@
 
-
+// psuedoclassical style
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
@@ -7,14 +7,56 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  var objKey = [k, v];
+  var existingValue = this._storage.get(index);
+  if (existingValue === undefined) {
+    existingValue = [];
+  }
+
+  var duplicate = false;
+  for (var i = 0; i < existingValue.length; i++) {
+    if (existingValue[i][0] === k) {
+      duplicate = true;
+      existingValue[i][1] = v;
+    }
+  }
+  if (!duplicate) {
+    existingValue.push(objKey);
+  }
+
+  this._storage.set(index, existingValue);
 };
 
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  var hashIndex = this._storage.get(index);
+  if (hashIndex === undefined) {
+    return hashIndex;
+  }
+
+  if (hashIndex.length > 1) {
+    for (var i = 0; i < hashIndex.length; i++) {
+      if (hashIndex[i][0] === k) {
+        return hashIndex[i][1];
+      }
+    }
+    return undefined;
+  }
+
+  return hashIndex[0][1];
 };
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  this._storage.each( function(item, i, collection) {
+    if (i === index) {
+      delete collection[index];
+      return collection;
+    }
+  });
+
+  //this._storage.remove(index);
+
 };
 
 
