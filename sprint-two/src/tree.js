@@ -1,12 +1,14 @@
+//
 var Tree = function(value) {
   var newTree = {};
   newTree.value = value;
 
   // array containing an array number of subtrees
   // initialize as an empty array
-  newTree.children = null; // fix me
+  newTree.children = []; // fix me
 
   // extend the newTree object with treeMethods object
+  _.extend(newTree, treeMethods);
 
   return newTree;
 };
@@ -21,6 +23,8 @@ treeMethods.addChild = function(value) {
   create new child with specified value
   add that new child to the current tree Children using this
   */
+  this.children.push(Tree(value));
+
 };
 
 // takes any input and returns a boolean reflecting whether
@@ -39,11 +43,23 @@ treeMethods.contains = function(target) {
 
   if we get this far, the value doesn't exist and return false
   */
+  if (this.value === target) {
+    return true;
+  }
+
+  for (var i = 0; i < this.children.length; i++) {
+    if (this.children[i].contains(target)) {
+      return true;
+    }
+  }
+  return false;
+
 };
 
 
 
 /*
 Complexity: What is the time complexity of the above functions?
-
+- addChild:
+- contains:
 */
