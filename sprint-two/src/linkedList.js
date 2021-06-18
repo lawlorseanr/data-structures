@@ -6,14 +6,26 @@ var LinkedList = function() {
   // takes a value and adds to the end of the list
   list.addToTail = function(value) {
     /*
-    if no head
-      set head equal to new node
-      then set tail to same new node
-
     if head
       set tail.next to new node
       then set list.tail to same new node
+
+    if no head
+      set head equal to Node(value)
+      then set tail to head
     */
+    if (list.head !== null) {
+      var newNode = Node(value);
+      list.tail.next = newNode;
+      list.tail = newNode;
+
+    }
+
+    if (list.head === null) {
+      list.head = Node(value);
+      list.tail = list.head;
+    }
+
   };
 
   // removes the first node form the list and returns its value
@@ -23,8 +35,14 @@ var LinkedList = function() {
       save current head value
       set list head to head.next
 
-    return saved head value
+      return saved head value
     */
+    if (list.head !== null) {
+      var currHead = list.head;
+      list.head = list.head.next;
+
+      return currHead.value;
+    }
   };
 
   // returns boolean reflecting whether or not value is in linked list
@@ -38,8 +56,28 @@ var LinkedList = function() {
       while not found and current node . next does not equal null
         check if current node value equals target
           if current node value equals target, return boolean
-
     */
+
+    found = false;
+    if (list.head !== undefined) {
+
+      var currentNode = list.head;
+      while (!found) {
+        if (currentNode.value === target) {
+          found = true;
+        }
+
+        currentNode = currentNode.next;
+
+        if (currentNode === null) {
+          break;
+        }
+      }
+      return found;
+
+    }
+
+
   };
 
   return list;
