@@ -1,37 +1,29 @@
 var Queue = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
   var someInstance = {};
-  someInstance.storage = {'length': 0};
 
+  // Use an object with numeric keys to store values
+  someInstance.start = 0;
+  someInstance.end = 0;
   _.extend(someInstance, queueMethods);
-
   return someInstance;
 };
 
+// Implement the methods below
 var queueMethods = {};
-queueMethods.enqueue = function (value) {
-  this.storage[this.storage.length] = value;
-  this.storage.length += 1;
+queueMethods.enqueue = function(value) {
+  this[this.end] = value;
+  this.end++;
 };
 
-queueMethods.dequeue = function () {
-  if (this.storage.length > 0) {
-    var removedValue = this.storage[0];
-    delete this.storage[0];
-
-    for (var i = 0; i < this.storage.length - 1; i ++) {
-      this.storage[i] = this.storage[i + 1];
-    }
-    delete this.storage[i];
-
-    this.storage.length -= 1;
-    return removedValue;
+queueMethods.dequeue = function() {
+  if (this.size() > 0) {
+    var startValue = this[this.start];
+    delete this[this.start];
+    this.start++;
+    return startValue;
   }
 };
 
-queueMethods.size = function () {
-  return this.storage.length;
+queueMethods.size = function() {
+  return this.end - this.start;
 };
-
-

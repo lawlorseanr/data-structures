@@ -17,6 +17,7 @@ sharedMethods.push = function(value) {
 sharedMethods.pop = function() {
   if (this.size() > 0) {
     var returnValue = this[this.end - 1];
+    delete this[this.end - 1];
     this.end--;
     return returnValue;
   }
