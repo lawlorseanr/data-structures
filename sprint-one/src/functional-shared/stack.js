@@ -1,32 +1,27 @@
 var Stack = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
   var someInstance = {};
-  someInstance.storage = {'length': 0};
+  someInstance.start = 0;
+  someInstance.end = 0;
 
-  _.extend(someInstance, stackMethods);
-
+  _.extend(someInstance, sharedMethods);
   return someInstance;
 };
 
-var stackMethods = {};
-stackMethods.push = function (value) {
-  this.storage[this.storage.length] = value;
-  this.storage.length += 1;
+// Implement the methods below
+var sharedMethods = {};
+sharedMethods.push = function(value) {
+  this[this.end] = value;
+  this.end++;
 };
 
-stackMethods.pop = function () {
-  if (this.storage.length > 0) {
-    var poppedItem = this.storage[this.storage.length - 1];
-    delete this.storage[this.storage.length - 1];
-
-    this.storage.length -= 1;
-    return poppedItem;
+sharedMethods.pop = function() {
+  if (this.size() > 0) {
+    var returnValue = this[this.end - 1];
+    this.end--;
+    return returnValue;
   }
 };
 
-stackMethods.size = function () {
-  return this.storage.length;
+sharedMethods.size = function() {
+  return this.end - this.start;
 };
-
-

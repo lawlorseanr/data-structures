@@ -1,28 +1,23 @@
 var Stack = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
   var someInstance = Object.create(stackMethods);
-  someInstance.storage = {'length': 0};
-
+  someInstance.start = 0;
+  someInstance.end = 0;
   return someInstance;
 };
 
+// Implement the methods below
 var stackMethods = {};
-stackMethods.push = function (value) {
-  this.storage[this.storage.length] = value;
-  this.storage.length += 1;
+stackMethods.push = function(value) {
+  this[this.end] = value;
+  this.end++;
 };
-
-stackMethods.pop = function () {
-  if (this.storage.length > 0) {
-    var poppedItem = this.storage[this.storage.length - 1];
-    delete this.storage[this.storage.length - 1];
-
-    this.storage.length -= 1;
-    return poppedItem;
+stackMethods.pop = function() {
+  if (this.size() > 0) {
+    var returnValue = this[this.end - 1];
+    this.end--;
+    return returnValue;
   }
 };
-
-stackMethods.size = function () {
-  return this.storage.length;
+stackMethods.size = function() {
+  return this.end - this.start;
 };
