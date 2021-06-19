@@ -51,21 +51,6 @@ HashTable.prototype.remove = function(k) {
     }
   }
   this._storage.set(index, indexContents);
-  /*
-  this._storage.each( function(item, i, collection) {
-    if (i === index && collection[i] !== undefined) {
-      for (var j = 0; j < collection[i].length; j++) {
-        if (collection[i][j][0] === k) {
-          collection[i].splice(j, 1);
-        }
-      }
-      return collection;
-    }
-  });
-  */
-
-  //this._storage.remove(index);
-
 };
 
 
