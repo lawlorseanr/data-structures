@@ -44,6 +44,14 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  var indexContents = this._storage.get(index);
+  for (var i = 0; i < indexContents.length; i++) {
+    if (indexContents[i][0] === k) {
+      indexContents.splice(i, 1);
+    }
+  }
+  this._storage.set(index, indexContents);
+  /*
   this._storage.each( function(item, i, collection) {
     if (i === index && collection[i] !== undefined) {
       for (var j = 0; j < collection[i].length; j++) {
@@ -54,6 +62,7 @@ HashTable.prototype.remove = function(k) {
       return collection;
     }
   });
+  */
 
   //this._storage.remove(index);
 
