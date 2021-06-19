@@ -39,7 +39,6 @@ HashTable.prototype.retrieve = function(k) {
       return hashIndex[i][1];
     }
   }
-
   return undefined;
 };
 
