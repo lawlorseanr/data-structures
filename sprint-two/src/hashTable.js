@@ -34,23 +34,24 @@ HashTable.prototype.retrieve = function(k) {
     return hashIndex;
   }
 
-  if (hashIndex.length > 1) {
-    for (var i = 0; i < hashIndex.length; i++) {
-      if (hashIndex[i][0] === k) {
-        return hashIndex[i][1];
-      }
+  for (var i = 0; i < hashIndex.length; i++) {
+    if (hashIndex[i][0] === k) {
+      return hashIndex[i][1];
     }
-    return undefined;
   }
 
-  return hashIndex[0][1];
+  return undefined;
 };
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage.each( function(item, i, collection) {
-    if (i === index) {
-      delete collection[index];
+    if (i === index && collection[i] !== undefined) {
+      for (var j = 0; j < collection[i].length; j++) {
+        if (collection[i][j][0] === k) {
+          collection[i].splice(j, 1);
+        }
+      }
       return collection;
     }
   });
