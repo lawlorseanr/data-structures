@@ -1,12 +1,10 @@
 var Set = function() {
   var set = Object.create(setPrototype);
-
-  // set the _storage value to an empty array
-  // refactored to object
   set._storage = {}; // fix me
   return set;
 };
 
+//set is an Object.keys[] gather all the keys in a
 var setPrototype = {};
 
 // takes any string and adds it to the set
@@ -28,6 +26,20 @@ setPrototype.remove = function(item) {
   delete this._storage[item];
 };
 
+setPrototype.has = function (item) {
+  if (this._storage.length !== 0) {
+    for (var keys in this._storage) {
+      if (this._storage[keys] === item) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+setPrototype.size = function () {
+  return Object.keys(this._storage).length;
+};
 /*
 Complexity: What is the time complexity of the above functions?
 

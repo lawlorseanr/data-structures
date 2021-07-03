@@ -50,9 +50,3 @@ var Node = function(value) {
 
   return node;
 };
-
-/*
-Complexity: What is the time complexity of the above functions?
-- Time complexity is O(n) because of the contains function, which may need to iterate
-- over every element
- */

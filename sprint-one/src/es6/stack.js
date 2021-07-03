@@ -25,5 +25,3 @@ class Stack {
   }
 
 }
-
-var SomeStack = new Stack();

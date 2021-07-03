@@ -24,4 +24,20 @@ describe('set', function() {
     expect(set.contains('Mel Gibson')).to.equal(false);
   });
 
+  it('should return true if a set has the value', function() {
+    set.add('hello');
+    expect(set.has('hello')).to.equal(true);
+    set.remove('hello');
+    expect(set.has('hello')).to.equal(false);
+  });
+
+  it('should return the size of a set', function () {
+    set.add('hello');
+    set.add('world');
+    set.add('I am so happy that I figured this out');
+    expect(set.size()).to.equal(3);
+    set.remove('world');
+    expect(set.size()).to.equal(2);
+  });
+
 });
