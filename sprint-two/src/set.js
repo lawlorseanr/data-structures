@@ -7,19 +7,21 @@ var Set = function() {
 //set is an Object.keys[] gather all the keys in a
 var setPrototype = {};
 
+// takes any string and adds it to the set
 setPrototype.add = function(item) {
-  this._storage[item] = item;
-};
-
-setPrototype.contains = function(item) {
-  for (var keys in this._storage) {
-    if (keys === item) {
-      return true;
-    }
+  if (this._storage[item] === undefined) {
+    this._storage[item] = null;
   }
-  return false;
 };
 
+
+// method, takes any string and returns a boolean
+// reflecting whether it can be found in the set
+setPrototype.contains = function(item) {
+  return this._storage[item] === null;
+};
+
+// method, takes any string and removes it from the set, if present
 setPrototype.remove = function(item) {
   delete this._storage[item];
 };
@@ -39,5 +41,6 @@ setPrototype.size = function () {
   return Object.keys(this._storage).length;
 };
 /*
- * Complexity: What is the time complexity of the above functions?
- */
+Complexity: What is the time complexity of the above functions?
+
+*/

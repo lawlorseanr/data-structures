@@ -1,87 +1,67 @@
-
-
-// Instantiate a new graph
+// Instantiate a new graph pseudoclassical style
 var Graph = function() {
-  this.vertex = {};
+  /*
+  create a storage object for the Graph instantiation
+  */
+  this._storage = {};
 };
 
-// Add a node to the graph, passing in the node's value.
+// method that takes a new node and adds it to the graph
 Graph.prototype.addNode = function(node) {
-  this.vertex[node] = [];
-  this.vertex[node].push(node);
+  this._storage[node] = [];
 };
 
-// Return a boolean value indicating if the value passed to contains is represented in the graph.
+// method that takes any node and returns a boolean reflecting whether it can be found in the graph
 Graph.prototype.contains = function(node) {
-  var foundItem = false;
-  for (var nodes in this.vertex) {
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i] === node.toString()) {
-        foundItem = true;
-      }
-    }
-  }
-  return foundItem;
-};
+  var stringNode = node.toString();
 
-// Removes a node from the graph.
-Graph.prototype.removeNode = function(node) {
-  delete this.vertex[node];
-  for (var keys in this.vertex) {
-    var edges = this.vertex[keys];
-    if (edges.indexOf(node) > 0) {
-      edges.splice(edges.indexOf(node), 1);
-    }
-  }
-};
-
-// Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
-Graph.prototype.hasEdge = function(fromNode, toNode) {
-  if (this.vertex[fromNode]) {
-    for (var i = 0; i < this.vertex[fromNode].length; i++) {
-      if (this.vertex[fromNode][i] === toNode) {
-        return true;
-      }
-    }
-  }
-  if (this.vertex[toNode]) {
-    for (var i = 0; i < this.vertex[toNode].length; i++) {
-      if (this.vertex[toNode][i] === fromNode) {
-        return true;
-      }
+  for (var key in this._storage) {
+    if (key === stringNode) {
+      return true;
     }
   }
   return false;
 };
 
-// Connects two nodes in a graph by adding an edge between them.
+// method that takes any node and removes it from the graph, if present. All edges connected to that Node are removed as well.
+Graph.prototype.removeNode = function(node) {
+  var childNodes = this._storage[node];
+  delete this._storage[node];
+
+  for (var i = 0; i < childNodes.length; i++) {
+    var nodeIndexInChild = this._storage[childNodes[i]].indexOf(node);
+    this._storage[childNodes[i]].splice(nodeIndexInChild, 1);
+  }
+};
+
+// method that returns a boolean reflecting whether or not two nodes are connected
+Graph.prototype.hasEdge = function(fromNode, toNode) {
+  return this._storage[fromNode].indexOf(toNode) >= 0;
+};
+
+// method that creates a edge (connection) between two nodes if they both are present within the graph
 Graph.prototype.addEdge = function(fromNode, toNode) {
-  if (this.vertex[fromNode] !== undefined && this.vertex[fromNode] !== undefined) {
-
-    this.vertex[fromNode].push(toNode);
+  if (this._storage[fromNode] !== undefined && this._storage[toNode] !== undefined) {
+    this._storage[fromNode].push(toNode);
+    this._storage[toNode].push(fromNode);
   }
-
-  this.vertex[toNode].push(fromNode);
 };
 
-// Remove an edge between any two specified (by value) nodes.
+// method that removes the connection between two nodes
 Graph.prototype.removeEdge = function(fromNode, toNode) {
-  var indexOftoNode = this.vertex[fromNode].indexOf(toNode);
-  this.vertex[fromNode].splice(indexOftoNode, 1);
-  var indexOfFromNode = this.vertex[toNode].indexOf(fromNode);
-  this.vertex[toNode].splice(indexOfFromNode, 1);
-};
+  var findTo = this._storage[fromNode].indexOf(toNode);
+  var findFrom = this._storage[toNode].indexOf(fromNode);
 
-// Pass in a callback which will be executed on each node of the graph.
-Graph.prototype.forEachNode = function(cb) {
-  for (var keys in this.vertex) {
-    var currentNode = this.vertex[keys];
-    cb(currentNode);
+  if (findTo >= 0 && findFrom >= 0) {
+    this._storage[fromNode].splice(findTo, 1);
+    this._storage[toNode].splice(findFrom, 1);
   }
 };
 
-/*
- * Complexity: What is the time complexity of the above functions?
- */
-
+// method that traverses through the graph, calling a passed in function once on each node
+Graph.prototype.forEachNode = function(cb) {
+  for (var key in this._storage) {
+    cb(key);
+  }
+};
 

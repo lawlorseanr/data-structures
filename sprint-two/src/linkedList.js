@@ -1,39 +1,42 @@
 var LinkedList = function() {
   var list = {};
-  list.head = null;
-  list.tail = null;
+  list.head = null; // should be a Node instance
+  list.tail = null; // should be a Node instance
 
+  // takes a value and adds to the end of the list
   list.addToTail = function(value) {
-    //if empty, means head and tail is null
-    // change head pointer to node pass in value, same for tail
-    if (list.head === null && list.tail === null) {
+    if (list.head !== null) {
+      var newNode = Node(value);
+      list.tail.next = newNode;
+      list.tail = newNode;
+    }
+
+    if (list.head === null) {
       list.head = Node(value);
-      list.tail = Node(value);
-    } else {
-      list.tail = Node(value);
-      list.head.next = Node(value);
-      list.tail.next = null;
+      list.tail = list.head;
     }
   };
 
+  // removes the first node form the list and returns its value
   list.removeHead = function() {
-    var removedNodeValue = list.head.value;
-    list.head = list.head.next;
-    return removedNodeValue;
+    if (list.head !== null) {
+      var currHead = list.head;
+      list.head = list.head.next;
 
+      return currHead.value;
+    }
   };
 
+  // returns boolean reflecting whether or not value is in linked list
   list.contains = function(target) {
-    var recur = function(currentNode) {
+    var currentNode = list.head;
+    while (currentNode !== null) {
       if (currentNode.value === target) {
         return true;
       }
-      if (currentNode.next !== null) {
-        return recur(currentNode.next);
-      }
-      return false;
-    };
-    return recur(list.head);
+      currentNode = currentNode.next;
+    }
+    return false;
   };
 
   return list;
@@ -47,11 +50,3 @@ var Node = function(value) {
 
   return node;
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- addToTail: O(1);
- removeHead: O(1);
- contains: O(n);
-
- */

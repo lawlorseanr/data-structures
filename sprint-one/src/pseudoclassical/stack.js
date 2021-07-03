@@ -1,21 +1,19 @@
 var Stack = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
-  // use new and this keyword and capitalize the class name
-  this.storage = {};
+  this.start = 0;
+  this.end = 0;
 };
 
-Stack.prototype.push = function (value) {
-  var indexToBe = Object.keys(this.storage).length;
-  this.storage[indexToBe] = value;
+Stack.prototype.push = function(value) {
+  this[this.end] = value;
+  this.end++;
 };
 Stack.prototype.pop = function() {
-  var popedItem = this.storage[Object.keys(this.storage).length - 1];
-  delete this.storage[Object.keys(this.storage).length - 1];
-  return popedItem;
+  if (this.size() > 0) {
+    var returnValue = this[this.end - 1];
+    this.end--;
+    return returnValue;
+  }
 };
 Stack.prototype.size = function() {
-  return Object.keys(this.storage).length;
+  return this.end - this.start;
 };
-
-var stack = new Stack;

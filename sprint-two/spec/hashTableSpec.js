@@ -30,9 +30,20 @@ describe('hashTable', function() {
   });
 
   it('should not contain values that were removed', function() {
-    hashTable.insert('Steven', 'Tyler');
-    hashTable.remove('Steven');
-    expect(hashTable.retrieve('Steven')).to.equal(undefined);
+    hashTable.insert('Hercules', 'Tyler');
+    hashTable.remove('Hercules');
+    expect(hashTable.retrieve('Hercules')).to.equal(undefined);
+  });
+
+  it('should only remove the desired key in a collided index', function() {
+    var oldHashFunction = window.getIndexBelowMaxForKey;
+    window.getIndexBelowMaxForKey = function() { return 1; };
+    hashTable.insert('vally1', 'Tyler');
+    hashTable.insert('vally2', 'Creator');
+    hashTable.remove('vally1');
+    expect(hashTable.retrieve('vally1')).to.equal(undefined);
+    expect(hashTable.retrieve('vally2')).to.equal('Creator');
+    window.getIndexBelowMaxForKey = oldHashFunction;
   });
 
   it('should handle hash function collisions', function() {
